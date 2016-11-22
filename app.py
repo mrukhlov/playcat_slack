@@ -4,6 +4,7 @@ from slackclient import SlackClient
 import time
 import requests
 import json
+import os
 
 def index_getter(letter):
 	index = 0
@@ -15,9 +16,9 @@ def index_getter(letter):
 	return index_list
 
 
-SLACK_BOT_TOKEN = 'xoxb-107076822499-gOvjAV9Rh3MVIpHrPE4kjjhh'
-AGENT_TOKEN = 'f209108eae1945bc8bccfe532baa1ef6'
-BOT_ID = 'U3528Q6EP'
+SLACK_BOT_TOKEN = os.environ["SLACK_BOT_TOKEN"]
+AGENT_TOKEN = os.environ["AGENT_TOKEN"]
+BOT_ID = os.environ["BOT_ID"]
 
 slack_client = SlackClient(SLACK_BOT_TOKEN)
 
@@ -99,14 +100,15 @@ def handle_command(command, channel):
 	if text_response != None:
 
 		attachments = []
-
+		link = ''
 		if action == 'game.correct.word' or action == 'game.correct_guess':
 			if picture:
 				if action == 'game.correct.word':
 					link = "https://s22.postimg.org/ih21470d9/image.png"
 				else:
-					link = img_links[0]
-					img_links.remove(link)
+					if len(img_links) > 0:
+						link = img_links[0]
+						img_links.remove(link)
 
 				attachments.append({"title": "IMAGE", "image_url": link})
 
