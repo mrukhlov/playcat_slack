@@ -22,7 +22,7 @@ BOT_ID = os.environ["BOT_ID"]
 
 slack_client = SlackClient(SLACK_BOT_TOKEN)
 
-def apiai_equest(request):
+def apiai_request(request):
 
 	global guess_word
 	global img_links
@@ -96,7 +96,7 @@ def handle_command(command, channel):
 		returns back what it needs for clarification.
 	"""
 
-	text_response, action, picture = apiai_equest(command)
+	text_response, action, picture = apiai_request(command)
 	if text_response != None:
 
 		attachments = []
